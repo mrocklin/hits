@@ -2,6 +2,7 @@
   (:use noir.core)
   (:use hiccup.core)
   (:use hiccup.page-helpers)
+  (:use expectations)
   (:require [noir.server :as server]))
 
 (def
