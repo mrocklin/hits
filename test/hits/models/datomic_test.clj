@@ -96,6 +96,16 @@
   (is (= (current-repos (d/db conn))
          #{["hits" "hits-test"] ["hits" "hits-test2"]})))
 
+(deftest test-valid-identifier
+  (is (and (valid-identifier "hits")
+           (valid-identifier "hits-test")
+           (valid-identifier "hits3")
+           (valid-identifier "hits_3")
+           (not (valid-identifier "ls -la")))))
+
+(deftest test-unsanitary-inputs
+  (is (thrown? Exception (add-repo-to-db! conn "ls -la" "your.mother"))))
+
 (comment (clojure.pprint/pprint (seq (d/q 
                       '[:find ?file  
                         :where [?c :git.log/id ?id] 
